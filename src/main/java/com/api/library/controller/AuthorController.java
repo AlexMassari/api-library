@@ -10,6 +10,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
+import java.math.BigInteger;
+
 @Controller
 @Api(value = "/author",
         tags = "author",
@@ -29,4 +31,19 @@ public interface AuthorController {
             )
     })
     ResponseEntity<String> createAuthor(AuthorEntity author);
+
+    @ApiOperation(value = "Modificar un autor")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200,
+                    message = "Busqueda Exitosa",
+                    response = AuthorEntity.class
+            ),
+            @ApiResponse(code = 404,
+                    message = "No se encontró el autor con ese ID"
+            ),
+            @ApiResponse(code = 500,
+                    message = "No se pudo conectar a la BD"
+            )
+    })
+    ResponseEntity<String> updateAuthor(BigInteger authorId, AuthorEntity author);
 }
