@@ -1,5 +1,7 @@
 package com.api.library.service.impl;
 
+import com.api.library.entity.AuthorEntity;
+import com.api.library.exception.NotFoundException;
 import com.api.library.repository.AuthorRepository;
 import com.api.library.service.AuthorService;
 import lombok.AllArgsConstructor;
@@ -23,7 +25,23 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     @Transactional
-    public void updateAuthor(String authorName, BigInteger id) {
-        authorRepository.updateAuthor(authorName, id);
+    public void updateAuthor(String authorName, BigInteger authorId) throws NotFoundException {
+        AuthorEntity author=authorRepository.getAuthorById(authorId).orElse(null);
+        if(author==null){
+            throw new NotFoundException("Author not found");
+        }
+        authorRepository.updateAuthor(authorName, authorId);
     }
+
+    @Override
+    @Transactional
+    public void deleteAuthor(BigInteger authorId) throws NotFoundException {
+        AuthorEntity author=authorRepository.getAuthorById(authorId).orElse(null);
+        if(author==null){
+            throw new NotFoundException("Author not found");
+        }
+        authorRepository.deleteAuthor(authorId);
+    }
+
+
 }

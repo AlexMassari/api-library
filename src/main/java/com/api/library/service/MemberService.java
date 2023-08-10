@@ -1,6 +1,7 @@
 package com.api.library.service;
 
 import com.api.library.entity.MemberEntity;
+import com.api.library.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Member;
@@ -15,7 +16,7 @@ public interface MemberService {
 
     void insertMember(String name, Date birth, String adress, String phone, String email, Date entryDate);
 
-    void updateMember(String name, Date birth, String adress, String phone, String email, Date entryDate, BigInteger memberId);
+    void updateMember(String name, Date birth, String adress, String phone, String email, Date entryDate, BigInteger memberId) throws NotFoundException;
 
-    void deleteMember(BigInteger memberId);
+    void deleteMember(BigInteger memberId) throws NotFoundException;
 }

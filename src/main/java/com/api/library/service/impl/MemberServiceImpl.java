@@ -3,6 +3,7 @@ package com.api.library.service.impl;
 import com.api.library.entity.MemberEntity;
 import com.api.library.exception.MemberIdNotFoundException;
 import com.api.library.exception.MemberNameNotFoundException;
+import com.api.library.exception.NotFoundException;
 import com.api.library.repository.MemberRepository;
 import com.api.library.service.MemberService;
 import lombok.AllArgsConstructor;
@@ -40,13 +41,21 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public void updateMember(String name, Date birth, String adress, String phone, String email, Date entryDate, BigInteger memberId) {
+    public void updateMember(String name, Date birth, String adress, String phone, String email, Date entryDate, BigInteger memberId) throws NotFoundException{
+        MemberEntity member = memberRepository.findMemberById(memberId).orElse(null);
+        if(member==null){
+            throw new NotFoundException("Member not found");
+        }
         memberRepository.updateMember(name, birth, adress, phone, email, entryDate, memberId);
     }
 
     @Override
     @Transactional
-    public void deleteMember(BigInteger memberId) {
+    public void deleteMember(BigInteger memberId) throws NotFoundException {
+        MemberEntity member = memberRepository.findMemberById(memberId).orElse(null);
+        if(member==null){
+            throw new NotFoundException("Member not found");
+        }
         memberRepository.deleteMember(memberId);
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
@@ -35,5 +36,20 @@ public interface BookRepository extends JpaRepository<BookEntity, BigInteger> {
                     @Param("year") String year,
                     @Param("genre") String genre,
                     @Param("amount") int amount);
+
+    @Modifying
+    @Query(value = "UPDATE Books SET BK_TITLE=:title, BK_AUTHOR=:author, BK_PUBLISHER=:publisher, BK_YEAR=:year, " +
+            "BK_GENRE=:genre, BK_AMOUNT=:amount WHERE BK_ID=:id", nativeQuery = true)
+    void updateBook(@Param("title") String title,
+                    @Param("author") BigInteger author,
+                    @Param("publisher") BigInteger publisher,
+                    @Param("year") String year,
+                    @Param("genre") String genre,
+                    @Param("amount") int amount,
+                    @Param("id") BigInteger id);
+
+    @Modifying
+    @Query(value="DELETE FROM Books WHERE BK_ID=:id", nativeQuery = true)
+    void deleteBook(@Param("id") BigInteger id);
 
 }

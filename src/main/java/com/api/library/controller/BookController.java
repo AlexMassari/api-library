@@ -92,4 +92,34 @@ public interface BookController {
             )
     })
     ResponseEntity<String> createBook(BookEntity book);
+
+    @ApiOperation(value = "Modificar un libro")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200,
+                    message = "Busqueda Exitosa",
+                    response = BookEntity.class
+            ),
+            @ApiResponse(code = 404,
+                    message = "No se encontró un libro con el ID ingresado"
+            ),
+            @ApiResponse(code = 500,
+                    message = "No se pudo conectar a la BD"
+            )
+    })
+    ResponseEntity<String> updateBook(BigInteger bookId, BookEntity book);
+
+    @ApiOperation(value = "Eliminar un libro")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200,
+                    message = "Busqueda Exitosa",
+                    response = BookEntity.class
+            ),
+            @ApiResponse(code = 404,
+                    message = "No se encontró un libro con el ID ingresado"
+            ),
+            @ApiResponse(code = 500,
+                    message = "No se pudo conectar a la BD"
+            )
+    })
+    ResponseEntity<String> deleteBook(BigInteger bookId);
 }

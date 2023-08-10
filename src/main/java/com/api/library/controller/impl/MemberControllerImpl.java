@@ -2,6 +2,7 @@ package com.api.library.controller.impl;
 
 import com.api.library.controller.MemberController;
 import com.api.library.entity.MemberEntity;
+import com.api.library.exception.NotFoundException;
 import com.api.library.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -49,20 +50,22 @@ public class MemberControllerImpl implements MemberController {
         try{
         memberService.updateMember(member.getMemberName(), member.getMemberBirth(), member.getMemberAdress(), member.getMemberPhone(), member.getMemberEmail(), member.getMemberEntryDate(), memberId);
         return ResponseEntity.ok("Member update successfully");
-        }
-        catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating member");
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error !!! Member not found");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting member");
         }
     }
 
     @Override
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteMember(@PathVariable (name="id") BigInteger memberId) {
-        try{
+        try {
             memberService.deleteMember(memberId);
             return ResponseEntity.ok("Member delete successfully");
-        }
-        catch (Exception e) {
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error !!! Member not found");
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting member");
         }
     }

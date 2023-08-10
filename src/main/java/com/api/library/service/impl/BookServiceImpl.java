@@ -4,10 +4,7 @@ import com.api.library.dto.BookDto;
 import com.api.library.entity.AuthorEntity;
 import com.api.library.entity.BookEntity;
 import com.api.library.entity.PublisherEntity;
-import com.api.library.exception.AuthorIdNotFoundException;
-import com.api.library.exception.BookIdNotFoundException;
-import com.api.library.exception.BookTitleNotFoundException;
-import com.api.library.exception.PublisherIdNotFoundException;
+import com.api.library.exception.*;
 import com.api.library.repository.AuthorRepository;
 import com.api.library.repository.BookRepository;
 import com.api.library.repository.PublisherRepository;
@@ -47,6 +44,8 @@ public class BookServiceImpl implements BookService {
         bookDto.setAMOUNT(book.getBookAmount());
         return bookDto;
     }
+
+
 
     @Override
     public BookDto findBookByTitle(String bookTitle) {
@@ -94,5 +93,25 @@ public class BookServiceImpl implements BookService {
     @Transactional
     public void insertBook(String title, BigInteger author, BigInteger publisher, String year, String genre, int amount) {
         bookRepository.insertBook(title, author, publisher, year, genre, amount);
+    }
+
+    @Override
+    @Transactional
+    public void updateBook(String title, BigInteger author, BigInteger publisher, String year, String genre, int amount, BigInteger bookId) throws NotFoundException {
+        BookEntity book = bookRepository.findBookById(bookId).orElse(null);
+        if (book == null) {
+            throw new NotFoundException("Book not found");
+        }
+        bookRepository.updateBook(title, author, publisher, year, genre, amount, bookId);
+    }
+
+    @Override
+    @Transactional
+    public void deleteBook(BigInteger bookId) throws NotFoundException {
+        BookEntity book = bookRepository.findBookById(bookId).orElse(null);
+        if (book == null) {
+            throw new NotFoundException("Book not found");
+        }
+        bookRepository.deleteBook(bookId);
     }
 }

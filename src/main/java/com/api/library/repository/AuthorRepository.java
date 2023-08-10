@@ -28,4 +28,8 @@ public interface AuthorRepository extends JpaRepository<AuthorEntity, BigInteger
     @Query(value = "UPDATE Authors SET AU_NAME=:authorName WHERE AU_ID=:id", nativeQuery = true)
     void updateAuthor(@Param("authorName") String name,
                       @Param("id") BigInteger id);
+
+    @Modifying
+    @Query(value="DELETE FROM Authors WHERE AU_ID=:id", nativeQuery=true)
+    void deleteAuthor(@Param("id") BigInteger id);
 }

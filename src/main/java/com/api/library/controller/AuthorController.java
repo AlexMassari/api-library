@@ -46,4 +46,19 @@ public interface AuthorController {
             )
     })
     ResponseEntity<String> updateAuthor(BigInteger authorId, AuthorEntity author);
+
+    @ApiOperation(value = "ELiminar un autor")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200,
+                    message = "Busqueda Exitosa",
+                    response = AuthorEntity.class
+            ),
+            @ApiResponse(code = 404,
+                    message = "No se encontró el autor con ese ID"
+            ),
+            @ApiResponse(code = 500,
+                    message = "No se pudo conectar a la BD"
+            )
+    })
+    ResponseEntity<String> deleteAuthor(BigInteger authorId);
 }
