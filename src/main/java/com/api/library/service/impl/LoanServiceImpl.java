@@ -7,6 +7,7 @@ import com.api.library.entity.MemberEntity;
 import com.api.library.exception.BookIdNotFoundException;
 import com.api.library.exception.LoanIdNotFoundException;
 import com.api.library.exception.MemberIdNotFoundException;
+import com.api.library.exception.NotFoundException;
 import com.api.library.repository.BookRepository;
 import com.api.library.repository.LoanRepository;
 import com.api.library.repository.MemberRepository;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -66,5 +68,29 @@ public class LoanServiceImpl  implements LoanService {
             loanDtos.add(loanDto);
         }
         return loanDtos;
+    }
+
+    @Override
+    public void insertLoan(BigInteger bookId, BigInteger memberId, Date loanDate, Date loanLimit, Date loanReturn, String loanState) throws NotFoundException {
+        loanRepository.insertLoan(bookId, memberId, loanDate, loanLimit, loanReturn, loanState);
+    }
+
+    @Override
+    public void updateLoan(BigInteger bookId, BigInteger memberId, Date loanDate, Date loanLimit, Date loanReturn, String loanState, BigInteger loanId) throws NotFoundException {
+        LoanEntity loan=loanRepository.findLoanById(loanId).orElse(null);
+        if(loan==null){
+            throw new NotFoundException("Loan ID Not Found");
+        }
+        loanRepository.updateLoan(bookId, memberId, loanDate, loanLimit, loanReturn, loanState, loanId);
+    }
+
+    @Override
+    public void deleteLoan(BigInteger loanId) throws NotFoundException {
+        LoanEntity loan=loanRepository.findLoanById(loanId).orElse(null);
+        if(loan==null)
+        {
+            throw new NotFoundException("Loan ID not found");
+        }
+        loanRepository.deleteLoan(loanId);
     }
 }
