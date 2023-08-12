@@ -20,7 +20,7 @@ public interface BookRepository extends JpaRepository<BookEntity, BigInteger> {
     Optional<BookEntity> findBookById(@Param("bookId") BigInteger bookId);
 
     @Query(value="select BK_ID, BK_TITLE, BK_AUTHOR, BK_PUBLISHER, BK_YEAR, BK_GENRE, BK_AMOUNT \n" +
-            "from Books where BK_TITLE =:bookTitle", nativeQuery=true)
+            "from Books where REPLACE(LOWER(TRIM(BK_TITLE)), ' ', '') =  REPLACE(LOWER(TRIM(:bookTitle)), ' ', '')", nativeQuery=true)
     Optional<BookEntity> findBookByTitle(@Param("bookTitle") String bookTitle);
 
     @Query(value="select BK_ID, BK_TITLE, BK_AUTHOR, BK_PUBLISHER, BK_YEAR, BK_GENRE, BK_AMOUNT \n" +

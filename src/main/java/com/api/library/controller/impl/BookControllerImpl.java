@@ -3,6 +3,7 @@ package com.api.library.controller.impl;
 import com.api.library.controller.BookController;
 import com.api.library.dto.BookDto;
 import com.api.library.entity.BookEntity;
+import com.api.library.exception.NameAlreadyExistException;
 import com.api.library.exception.NotFoundException;
 import com.api.library.service.BookService;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +47,8 @@ public class BookControllerImpl implements BookController {
         try {
             bookService.insertBook(book.getBookTitle(), book.getBookAuthor(), book.getBookPublisher(), book.getBookYear(), book.getBookGenre(), book.getBookAmount());
             return ResponseEntity.ok("Book inserted successfully");
+        } catch (NameAlreadyExistException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("This title is already in database");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating book");
         }

@@ -19,6 +19,10 @@ public interface AuthorRepository extends JpaRepository<AuthorEntity, BigInteger
             "from Authors where AU_ID =:authorId", nativeQuery=true)
     Optional<AuthorEntity> getAuthorById(@Param("authorId") BigInteger authorId);
 
+    @Query(value="select AU_ID, AU_NAME \n" +
+            "from Authors where REPLACE(LOWER(TRIM(AU_NAME)), ' ', '') =  REPLACE(LOWER(TRIM(:authorName)), ' ', '')", nativeQuery=true)
+    Optional<AuthorEntity> getAuthorByName(@Param("authorName") String authorId);
+
     @Modifying
     @Query(value = "INSERT INTO Authors (AU_NAME) " +
             "VALUES (:authorName)", nativeQuery = true)

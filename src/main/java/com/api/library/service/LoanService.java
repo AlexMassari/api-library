@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public interface LoanService {
     LoanDto getLoanById(BigInteger loanId);
-    List<LoanDto> GetLoanByMember(BigInteger loanMemberId);
+    List<LoanDto> GetLoanByMember(BigInteger loanMemberId) throws NotFoundException ;
 
     void insertLoan(BigInteger bookId, BigInteger memberId, Date loanDate, Date loanLimit, Date loanReturn, String loanState) throws NotFoundException;
 

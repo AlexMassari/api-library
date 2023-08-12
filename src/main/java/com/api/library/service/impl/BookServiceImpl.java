@@ -69,11 +69,11 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDto> getBooksByAuthor(BigInteger authorId) {
+        AuthorEntity author = authorRepository.getAuthorById(authorId)
+                .orElseThrow(()->new AuthorIdNotFoundException(authorId));
         List<BookEntity> booksByAuthor = bookRepository.findByAuthorId(authorId);
         List<BookDto> bookDTOs = new ArrayList<>();
         for (BookEntity bookEntity : booksByAuthor) {
-            AuthorEntity author = authorRepository.getAuthorById(bookEntity.getBookAuthor())
-                    .orElseThrow(()->new AuthorIdNotFoundException(bookEntity.getBookAuthor()));
             PublisherEntity publisher = publisherRepository.getPublisherIdById(bookEntity.getBookPublisher())
                     .orElseThrow(()-> new PublisherIdNotFoundException(bookEntity.getBookPublisher()));
             BookDto bookDto = new BookDto();
@@ -91,16 +91,22 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional
-    public void insertBook(String title, BigInteger author, BigInteger publisher, String year, String genre, int amount) {
-        bookRepository.insertBook(title, author, publisher, year, genre, amount);
+    public void insertBook(String title, BigInteger author, BigInteger publisher, String year, String genre, int amount) throws NameAlreadyExistException {
+        BookEntity book=bookRepository.findBookByTitle(title).orElse(null);
+        if(book==null){
+            bookRepository.insertBook(title, author, publisher, year, genre, amount);
+        }
+        else{
+            throw new NameAlreadyExistException("El nombre del libro ya existe");
+        }
     }
 
     @Override
     @Transactional
-    public void updateBook(String title, BigInteger author, BigInteger publisher, String year, String genre, int amount, BigInteger bookId) throws NotFoundException {
-        BookEntity book = bookRepository.findBookById(bookId).orElse(null);
-        if (book == null) {
-            throw new NotFoundException("Book not found");
+    public void updateBook(String title, BigInteger author, BigInteger publisher, String year, String genre, int amount, BigInteger bookId) throws NotFoundException, NameAlreadyExistException {
+        BookEntity bookById = bookRepository.findBookById(bookId).orElse(null);
+        if (bookById == null) {
+            throw new NotFoundException("Book id not found");
         }
         bookRepository.updateBook(title, author, publisher, year, genre, amount, bookId);
     }

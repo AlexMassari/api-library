@@ -4,10 +4,7 @@ import com.api.library.dto.LoanDto;
 import com.api.library.entity.BookEntity;
 import com.api.library.entity.LoanEntity;
 import com.api.library.entity.MemberEntity;
-import com.api.library.exception.BookIdNotFoundException;
-import com.api.library.exception.LoanIdNotFoundException;
-import com.api.library.exception.MemberIdNotFoundException;
-import com.api.library.exception.NotFoundException;
+import com.api.library.exception.*;
 import com.api.library.repository.BookRepository;
 import com.api.library.repository.LoanRepository;
 import com.api.library.repository.MemberRepository;
@@ -49,14 +46,14 @@ public class LoanServiceImpl  implements LoanService {
     }
 
     @Override
-    public List<LoanDto> GetLoanByMember(BigInteger loanMemberId) {
+    public List<LoanDto> GetLoanByMember(BigInteger loanMemberId) throws NotFoundException {
+        MemberEntity member = memberRepository.findMemberById(loanMemberId)
+                .orElseThrow(()->new MemberIdNotFoundException(loanMemberId));
         List<LoanEntity> loanByMember = loanRepository.findLoanByMember(loanMemberId);
         List<LoanDto> loanDtos = new ArrayList<>();
         for(LoanEntity loan : loanByMember){
             BookEntity book = bookRepository.findBookById(loan.getLoanBookId())
                     .orElseThrow(()-> new BookIdNotFoundException(loan.getLoanBookId()));
-            MemberEntity member = memberRepository.findMemberById(loan.getLoanMemberId())
-                    .orElseThrow(() -> new MemberIdNotFoundException(loan.getLoanMemberId()));
             LoanDto loanDto = new LoanDto();
             loanDto.setID(loan.getLoanId());
             loanDto.setBOOKTITLE(book.getBookTitle());

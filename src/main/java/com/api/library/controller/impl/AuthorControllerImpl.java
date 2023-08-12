@@ -2,6 +2,7 @@ package com.api.library.controller.impl;
 
 import com.api.library.controller.AuthorController;
 import com.api.library.entity.AuthorEntity;
+import com.api.library.exception.NameAlreadyExistException;
 import com.api.library.exception.NotFoundException;
 import com.api.library.service.AuthorService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,9 @@ public class AuthorControllerImpl implements AuthorController {
             authorService.insertAuthor(author.getAuthorName());
             return ResponseEntity.ok("Author inserted successfully");
         }
+        catch (NameAlreadyExistException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("This name is already in database");
+        }
         catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating author");
         }
@@ -38,8 +42,10 @@ public class AuthorControllerImpl implements AuthorController {
             return ResponseEntity.ok("Author updated successfully");
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error !!! Author not found");
+        } catch (NameAlreadyExistException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("This name is already in database");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting author");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating author");
         }
     }
 
