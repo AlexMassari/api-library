@@ -32,7 +32,7 @@ public interface MemberController {
             )
     })
     MemberEntity getMemberById(HttpServletRequest request,
-                               @ApiParam(value = "Nombre de socio")
+                               @ApiParam(value = "Id de socio")
                                BigInteger id);
 
     @ApiOperation(value = "Buscar los datos del socio por su nombre",

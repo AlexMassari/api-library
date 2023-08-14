@@ -36,7 +36,6 @@ public class AuthorControllerImpl implements AuthorController {
     @Override
     @PutMapping("/update/{id}")
     public ResponseEntity<String> updateAuthor(@PathVariable(name="id") BigInteger authorId, @RequestBody AuthorEntity author) {
-
         try{
             authorService.updateAuthor(author.getAuthorName(), authorId);
             return ResponseEntity.ok("Author updated successfully");

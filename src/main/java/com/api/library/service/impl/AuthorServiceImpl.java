@@ -19,12 +19,12 @@ public class AuthorServiceImpl implements AuthorService {
     AuthorRepository authorRepository;
     @Override
     @Transactional
-    public void insertAuthor(String name) throws NameAlreadyExistException {
-        AuthorEntity author=authorRepository.getAuthorByName(name).orElse(null);
+    public void insertAuthor(String publisherName) throws NameAlreadyExistException {
+        AuthorEntity author=authorRepository.getAuthorByName(publisherName).orElse(null);
         if(author==null){
-            authorRepository.insertAuthor(name);
+            authorRepository.insertAuthor(publisherName);
         } else{
-            throw new NameAlreadyExistException("El nombre ingresado ya existe");
+            throw new NameAlreadyExistException("Name already exist");
         }
 
     }
