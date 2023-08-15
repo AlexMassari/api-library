@@ -21,19 +21,19 @@ public interface AuthorRepository extends JpaRepository<AuthorEntity, BigInteger
 
     @Query(value="select AU_ID, AU_NAME \n" +
             "from Authors where REPLACE(LOWER(TRIM(AU_NAME)), ' ', '') =  REPLACE(LOWER(TRIM(:authorName)), ' ', '')", nativeQuery=true)
-    Optional<AuthorEntity> getAuthorByName(@Param("authorName") String authorId);
+    Optional<AuthorEntity> getAuthorByName(@Param("authorName") String authorName);
 
     @Modifying
     @Query(value = "INSERT INTO Authors (AU_NAME) " +
             "VALUES (:authorName)", nativeQuery = true)
-    void insertAuthor(@Param("authorName") String name);
+    void insertAuthor(@Param("authorName") String authorName);
 
     @Modifying
-    @Query(value = "UPDATE Authors SET AU_NAME=:authorName WHERE AU_ID=:id", nativeQuery = true)
-    void updateAuthor(@Param("authorName") String name,
-                      @Param("id") BigInteger id);
+    @Query(value = "UPDATE Authors SET AU_NAME=:authorName WHERE AU_ID=:authorId", nativeQuery = true)
+    void updateAuthor(@Param("authorName") String authorName,
+                      @Param("authorId") BigInteger authorId);
 
     @Modifying
-    @Query(value="DELETE FROM Authors WHERE AU_ID=:id", nativeQuery=true)
-    void deleteAuthor(@Param("id") BigInteger id);
+    @Query(value="DELETE FROM Authors WHERE AU_ID=:authorId", nativeQuery=true)
+    void deleteAuthor(@Param("authorId") BigInteger authorId);
 }

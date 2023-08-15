@@ -19,19 +19,19 @@ public interface PublisherRepository extends JpaRepository<PublisherEntity, BigI
 
     @Query(value="select PB_ID, PB_NAME \n" +
             "from Publishers where REPLACE(LOWER(TRIM(PB_NAME)), ' ', '') =  REPLACE(LOWER(TRIM(:publisherName)), ' ', '')", nativeQuery=true)
-    Optional<PublisherEntity> getPublisherByName(@Param("publisherName") String authorId);
+    Optional<PublisherEntity> getPublisherByName(@Param("publisherName") String publisherName);
 
     @Modifying
     @Query(value = "INSERT INTO Publishers (PB_NAME) " +
             "VALUES (:publisherName)", nativeQuery = true)
-    void insertPublisher(@Param("publisherName") String name);
+    void insertPublisher(@Param("publisherName") String publisherName);
 
     @Modifying
-    @Query(value = "UPDATE Publishers SET PB_NAME=:publisherName WHERE PB_ID=:id", nativeQuery = true)
-    void updatePublisher(@Param("publisherName") String name,
-                      @Param("id") BigInteger id);
+    @Query(value = "UPDATE Publishers SET PB_NAME=:publisherName WHERE PB_ID=:publisherId", nativeQuery = true)
+    void updatePublisher(@Param("publisherName") String publisherName,
+                      @Param("publisherId") BigInteger publisherId);
 
     @Modifying
-    @Query(value="DELETE FROM Publishers WHERE PB_NAME=:id", nativeQuery=true)
-    void deletePublisher(@Param("id") BigInteger id);
+    @Query(value="DELETE FROM Publishers WHERE PB_ID=:publisherId", nativeQuery=true)
+    void deletePublisher(@Param("publisherId") BigInteger publisherId);
 }

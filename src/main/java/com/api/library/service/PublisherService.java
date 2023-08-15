@@ -11,8 +11,8 @@ public interface PublisherService {
 
     void insertPublisher(String publisherName) throws NameAlreadyExistException;
 
-    void updatePublisher(String publisherName, BigInteger id) throws NotFoundException, NameAlreadyExistException;
+    void updatePublisher(String publisherName, BigInteger publisherId) throws NotFoundException, NameAlreadyExistException;
 
-    void deletePublisher(BigInteger id) throws NotFoundException;
+    void deletePublisher(BigInteger publisherId) throws NotFoundException;
 
 }

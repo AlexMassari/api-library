@@ -29,27 +29,27 @@ public interface BookRepository extends JpaRepository<BookEntity, BigInteger> {
 
     @Modifying
     @Query(value = "INSERT INTO Books (BK_TITLE, BK_AUTHOR, BK_PUBLISHER, BK_YEAR, BK_GENRE, BK_AMOUNT) " +
-            "VALUES (:title, :author, :publisher, :year, :genre, :amount)", nativeQuery = true)
+            "VALUES (:title, :authorId, :publisherId, :year, :genre, :amount)", nativeQuery = true)
     void insertBook(@Param("title") String title,
-                    @Param("author") BigInteger author,
-                    @Param("publisher") BigInteger publisher,
+                    @Param("authorId") BigInteger authorId,
+                    @Param("publisherId") BigInteger publisherId,
                     @Param("year") String year,
                     @Param("genre") String genre,
                     @Param("amount") int amount);
 
     @Modifying
-    @Query(value = "UPDATE Books SET BK_TITLE=:title, BK_AUTHOR=:author, BK_PUBLISHER=:publisher, BK_YEAR=:year, " +
+    @Query(value = "UPDATE Books SET BK_TITLE=:title, BK_AUTHOR=:authorId, BK_PUBLISHER=:publisherId, BK_YEAR=:year, " +
             "BK_GENRE=:genre, BK_AMOUNT=:amount WHERE BK_ID=:id", nativeQuery = true)
     void updateBook(@Param("title") String title,
-                    @Param("author") BigInteger author,
-                    @Param("publisher") BigInteger publisher,
+                    @Param("authorId") BigInteger authorId,
+                    @Param("publisherId") BigInteger publisherId,
                     @Param("year") String year,
                     @Param("genre") String genre,
                     @Param("amount") int amount,
                     @Param("id") BigInteger id);
 
     @Modifying
-    @Query(value="DELETE FROM Books WHERE BK_ID=:id", nativeQuery = true)
-    void deleteBook(@Param("id") BigInteger id);
+    @Query(value="DELETE FROM Books WHERE BK_ID=:bookId", nativeQuery = true)
+    void deleteBook(@Param("bookId") BigInteger bookId);
 
 }

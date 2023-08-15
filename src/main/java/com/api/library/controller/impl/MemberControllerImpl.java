@@ -21,14 +21,14 @@ public class MemberControllerImpl implements MemberController {
     private final MemberService memberService;
 
     @Override
-    @GetMapping("/id/{memberId}")
-    public MemberEntity getMemberById(HttpServletRequest request, @PathVariable(name = "memberId") final BigInteger memberId){
+    @GetMapping("/id/{id}")
+    public MemberEntity getMemberById(HttpServletRequest request, @PathVariable(name = "id") final BigInteger memberId){
         return memberService.findMemberId(memberId);
     }
 
     @Override
-    @GetMapping("/name/{memberName}")
-    public MemberEntity getMemberByName(HttpServletRequest request, @PathVariable(name = "memberName") final String memberName){
+    @GetMapping("/name/{name}")
+    public MemberEntity getMemberByName(HttpServletRequest request, @PathVariable(name = "name") final String memberName){
         return memberService.findMemberName(memberName);
     }
 
@@ -53,7 +53,7 @@ public class MemberControllerImpl implements MemberController {
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error !!! Member not found");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting member");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating member");
         }
     }
 

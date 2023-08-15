@@ -24,8 +24,8 @@ public class BookControllerImpl implements BookController {
     private final BookService bookService;
 
     @Override
-    @GetMapping("/id/{bookId}")
-    public BookDto getBookById(HttpServletRequest request, @PathVariable(name = "bookId") final BigInteger bookId) {
+    @GetMapping("/id/{id}")
+    public BookDto getBookById(HttpServletRequest request, @PathVariable(name = "id") final BigInteger bookId) {
         return bookService.findBookId(bookId);
     }
 
@@ -50,7 +50,7 @@ public class BookControllerImpl implements BookController {
         } catch (NameAlreadyExistException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("This title is already in database");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating book");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error inserting book");
         }
     }
 
@@ -63,7 +63,7 @@ public class BookControllerImpl implements BookController {
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error !!! Book not found");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating book");
         }
     }
 
@@ -76,7 +76,7 @@ public class BookControllerImpl implements BookController {
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error !!! Book not found");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting book");
         }
     }
 }

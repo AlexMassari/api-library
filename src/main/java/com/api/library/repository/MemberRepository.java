@@ -33,16 +33,16 @@ public interface MemberRepository extends JpaRepository<MemberEntity, BigInteger
 
     @Modifying
     @Query(value = "UPDATE Members SET MB_NAME=:name, MB_BIRTH=:birth, MB_ADRESS=:adress, " +
-            "MB_PHONE=:phone, MB_EMAIL=:email, MB_ENTRYDATE=:entryDate WHERE MB_ID=:id", nativeQuery = true)
+            "MB_PHONE=:phone, MB_EMAIL=:email, MB_ENTRYDATE=:entryDate WHERE MB_ID=:memberId", nativeQuery = true)
     void updateMember(@Param("name") String name,
                       @Param("birth") Date birth,
                       @Param("adress") String adress,
                       @Param("phone") String phone,
                       @Param("email") String email,
                       @Param("entryDate") Date entryDate,
-                      @Param("id") BigInteger id);
+                      @Param("memberId") BigInteger memberId);
 
     @Modifying
-    @Query(value = "DELETE FROM Members WHERE MB_ID=:id", nativeQuery = true)
-    void deleteMember(@Param("id") BigInteger id);
+    @Query(value = "DELETE FROM Members WHERE MB_ID=:memberId", nativeQuery = true)
+    void deleteMember(@Param("memberId") BigInteger memberId);
 }

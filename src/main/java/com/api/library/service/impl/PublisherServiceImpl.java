@@ -24,30 +24,30 @@ public class PublisherServiceImpl implements PublisherService {
         if(publisherEntity==null){
             publisherRepository.insertPublisher(publisherName);
         } else {
-            throw new NameAlreadyExistException("Name already exist");
+            throw new NameAlreadyExistException("Publisher Name already exist");
         }
     }
 
     @Override
     @Transactional
-    public void updatePublisher(String publisherName, BigInteger id) throws NotFoundException, NameAlreadyExistException {
-        PublisherEntity publisherById=publisherRepository.getPublisherIdById(id).orElse(null);
+    public void updatePublisher(String publisherName, BigInteger publisherId) throws NotFoundException, NameAlreadyExistException {
+        PublisherEntity publisherById=publisherRepository.getPublisherIdById(publisherId).orElse(null);
         PublisherEntity publisherByName=publisherRepository.getPublisherByName(publisherName).orElse(null);
         if(publisherById==null){
             throw new NotFoundException("Publisher not found");
         } else if(publisherByName!=null){
             throw new NameAlreadyExistException("Publisher name already exist");
         }
-        publisherRepository.updatePublisher(publisherName, id);
+        publisherRepository.updatePublisher(publisherName, publisherId);
     }
 
     @Override
     @Transactional
-    public void deletePublisher(BigInteger id) throws NotFoundException {
-        PublisherEntity publisher=publisherRepository.getPublisherIdById(id).orElse(null);
+    public void deletePublisher(BigInteger publisherId) throws NotFoundException {
+        PublisherEntity publisher=publisherRepository.getPublisherIdById(publisherId).orElse(null);
         if(publisher==null){
             throw new NotFoundException("Publisher not found");
         }
-        publisherRepository.deletePublisher(id);
+        publisherRepository.deletePublisher(publisherId);
     }
 }

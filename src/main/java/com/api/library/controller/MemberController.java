@@ -33,7 +33,7 @@ public interface MemberController {
     })
     MemberEntity getMemberById(HttpServletRequest request,
                                @ApiParam(value = "Id de socio")
-                               BigInteger id);
+                               BigInteger memberId);
 
     @ApiOperation(value = "Buscar los datos del socio por su nombre",
             response = MemberEntity.class,

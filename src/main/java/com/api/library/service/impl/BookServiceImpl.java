@@ -16,6 +16,7 @@ import javax.transaction.Transactional;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @AllArgsConstructor
@@ -96,8 +97,11 @@ public class BookServiceImpl implements BookService {
         if(book==null){
             bookRepository.insertBook(title, author, publisher, year, genre, amount);
         }
+        else if(Objects.equals(publisher, book.getBookPublisher())){
+            throw new NameAlreadyExistException("Book title already exist");
+        }
         else{
-            throw new NameAlreadyExistException("El nombre del libro ya existe");
+            bookRepository.insertBook(title, author, publisher, year, genre, amount);
         }
     }
 
@@ -106,7 +110,7 @@ public class BookServiceImpl implements BookService {
     public void updateBook(String title, BigInteger author, BigInteger publisher, String year, String genre, int amount, BigInteger bookId) throws NotFoundException, NameAlreadyExistException {
         BookEntity bookById = bookRepository.findBookById(bookId).orElse(null);
         if (bookById == null) {
-            throw new NotFoundException("Book id not found");
+            throw new NotFoundException("Book not found");
         }
         bookRepository.updateBook(title, author, publisher, year, genre, amount, bookId);
     }

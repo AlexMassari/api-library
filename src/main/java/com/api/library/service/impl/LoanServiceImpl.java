@@ -12,6 +12,7 @@ import com.api.library.service.LoanService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,6 +27,7 @@ public class LoanServiceImpl  implements LoanService {
     private final MemberRepository memberRepository;
 
     @Override
+    @Transactional
     public LoanDto getLoanById(BigInteger loanId) {
         LoanEntity loan = loanRepository.findLoanById(loanId)
                 .orElseThrow(()-> new LoanIdNotFoundException(loanId));
@@ -46,6 +48,7 @@ public class LoanServiceImpl  implements LoanService {
     }
 
     @Override
+    @Transactional
     public List<LoanDto> GetLoanByMember(BigInteger loanMemberId) throws NotFoundException {
         MemberEntity member = memberRepository.findMemberById(loanMemberId)
                 .orElseThrow(()->new MemberIdNotFoundException(loanMemberId));
@@ -68,25 +71,37 @@ public class LoanServiceImpl  implements LoanService {
     }
 
     @Override
+    @Transactional
     public void insertLoan(BigInteger bookId, BigInteger memberId, Date loanDate, Date loanLimit, Date loanReturn, String loanState) throws NotFoundException {
+        BookEntity book = bookRepository.findBookById(bookId).orElse(null);
+        MemberEntity member = memberRepository.findMemberById(memberId).orElse(null);
+        if(member==null)
+        {
+            throw new NotFoundException("Error !!! Member not found");
+        }
+        if(book==null){
+            throw new NotFoundException("Error !!! Book not found");
+        }
         loanRepository.insertLoan(bookId, memberId, loanDate, loanLimit, loanReturn, loanState);
     }
 
     @Override
+    @Transactional
     public void updateLoan(BigInteger bookId, BigInteger memberId, Date loanDate, Date loanLimit, Date loanReturn, String loanState, BigInteger loanId) throws NotFoundException {
         LoanEntity loan=loanRepository.findLoanById(loanId).orElse(null);
         if(loan==null){
-            throw new NotFoundException("Loan ID Not Found");
+            throw new NotFoundException("Error !!! Loan Not Found");
         }
         loanRepository.updateLoan(bookId, memberId, loanDate, loanLimit, loanReturn, loanState, loanId);
     }
 
     @Override
+    @Transactional
     public void deleteLoan(BigInteger loanId) throws NotFoundException {
         LoanEntity loan=loanRepository.findLoanById(loanId).orElse(null);
         if(loan==null)
         {
-            throw new NotFoundException("Loan ID not found");
+            throw new NotFoundException("Error !!! Loan not found");
         }
         loanRepository.deleteLoan(loanId);
     }

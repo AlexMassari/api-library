@@ -8,9 +8,9 @@ import java.math.BigInteger;
 
 @Service
 public interface AuthorService {
-    void insertAuthor(String publisherName) throws NameAlreadyExistException;
+    void insertAuthor(String authorName) throws NameAlreadyExistException;
 
-    void updateAuthor(String authorName, BigInteger id) throws NotFoundException, NameAlreadyExistException;
+    void updateAuthor(String authorName, BigInteger authorId) throws NotFoundException, NameAlreadyExistException;
 
-    void deleteAuthor(BigInteger id) throws NotFoundException;
+    void deleteAuthor(BigInteger authorId) throws NotFoundException;
 }

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler({BookIdNotFoundException.class, AuthorIdNotFoundException.class, PublisherIdNotFoundException.class, MemberIdNotFoundException.class})
+    @ExceptionHandler({BookIdNotFoundException.class, AuthorIdNotFoundException.class, PublisherIdNotFoundException.class, LoanIdNotFoundException.class,MemberIdNotFoundException.class})
     public ResponseEntity<String> handleIdNotFoundException(RuntimeException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }

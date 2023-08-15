@@ -23,14 +23,14 @@ public class LoanControllerImpl implements LoanController {
     private final LoanService loanService;
 
     @Override
-    @GetMapping("/id/{loanId}")
-    public LoanDto getLoanById(HttpServletRequest request, @PathVariable(name = "loanId") final BigInteger loanId) {
+    @GetMapping("/id/{id}")
+    public LoanDto getLoanById(HttpServletRequest request, @PathVariable(name = "id") final BigInteger loanId) {
         return loanService.getLoanById(loanId);
     }
 
     @Override
-    @GetMapping("/member/{loanMemberId}")
-    public List<LoanDto> getLoanByMember(HttpServletRequest request, @PathVariable(name = "loanMemberId") final BigInteger loanMemberId) {
+    @GetMapping("/member/{memberId}")
+    public List<LoanDto> getLoanByMember(HttpServletRequest request, @PathVariable(name = "memberId") final BigInteger loanMemberId) {
         return loanService.GetLoanByMember(loanMemberId);
     }
 
@@ -41,18 +41,20 @@ public class LoanControllerImpl implements LoanController {
             loanService.insertLoan(loanEntity.getLoanBookId(), loanEntity.getLoanMemberId(), loanEntity.getLoanDate(), loanEntity.getLoanLimitDate(), loanEntity.getLoanReturnDate(), loanEntity.getLoanState());
             return ResponseEntity.ok("Loan inserted successfully");
         }
+        catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Book or member ID Not Found");
+        }
         catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error inserting loan");
         }
     }
 
     @Override
-    @PutMapping("/update/{loanId}")
-    public ResponseEntity<String> updateLoan(@PathVariable(name = "loanId") BigInteger loanId, @RequestBody LoanEntity loanEntity) {
+    @PutMapping("/update/{id}")
+    public ResponseEntity<String> updateLoan(@PathVariable(name = "id") BigInteger loanId, @RequestBody LoanEntity loanEntity) {
         try {
             loanService.updateLoan(loanEntity.getLoanBookId(), loanEntity.getLoanMemberId(), loanEntity.getLoanDate(), loanEntity.getLoanLimitDate(), loanEntity.getLoanReturnDate(), loanEntity.getLoanState(), loanId);
             return ResponseEntity.ok("Loan update successfully");
-
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error !!! Loan not found");
         } catch (Exception e) {
@@ -61,15 +63,15 @@ public class LoanControllerImpl implements LoanController {
     }
 
     @Override
-    @DeleteMapping("/delete/{loanId}")
-    public ResponseEntity<String> deleteLoan(@PathVariable(name="loanId") BigInteger loanId) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteLoan(@PathVariable(name="id") BigInteger loanId) {
         try {
             loanService.deleteLoan(loanId);
             return ResponseEntity.ok("Loan deleted successfully");
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error !!! Loan not found");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating loan");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting loan");
         }
     }
 }

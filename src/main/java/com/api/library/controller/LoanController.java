@@ -35,7 +35,7 @@ public interface LoanController {
     })
     LoanDto getLoanById(HttpServletRequest request,
                         @ApiParam(value = "Numero ID del prestamo")
-                        BigInteger id);
+                        BigInteger loanId);
 
 
 
@@ -57,7 +57,7 @@ public interface LoanController {
     })
     List<LoanDto> getLoanByMember(HttpServletRequest request,
                                   @ApiParam(value = "Numero ID del socio")
-                                  BigInteger id);
+                                  BigInteger memberId);
 
     @ApiOperation(value = "Registrar un nuevo prestamo")
     @ApiResponses(value = {
@@ -91,7 +91,7 @@ public interface LoanController {
                     message = "No se pudo conectar a la BD"
             )
     })
-    ResponseEntity<String> updateLoan(BigInteger id, LoanEntity loanEntity);
+    ResponseEntity<String> updateLoan(BigInteger loanId, LoanEntity loanEntity);
 
     @ApiOperation(value = "Eliminar prestamo",
             response = LoanEntity.class,
@@ -109,5 +109,5 @@ public interface LoanController {
                     message = "No se pudo conectar a la BD"
             )
     })
-    ResponseEntity<String> deleteLoan(BigInteger id);
+    ResponseEntity<String> deleteLoan(BigInteger loanId);
 }
