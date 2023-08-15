@@ -29,3 +29,8 @@ Spring Boot: Se utiliza el framework Spring Boot para simplificar el desarrollo,
 Swagger: La API está documentada usando Swagger, lo que permite a los desarrolladores comprender fácilmente los endpoints disponibles.
 
 Base de Datos H2: La base de datos H2 en memoria se utiliza para almacenar los datos de la biblioteca. 
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Desarrollada Por Alexis Massari
+https://www.linkedin.com/in/alexis-massari/
