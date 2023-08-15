@@ -78,6 +78,28 @@ public interface BookController {
                                    @ApiParam(value = "Numero ID del autor")
                                    BigInteger id);
 
+
+    @ApiOperation(value = "Buscar libros por su autor",
+            response = BookDto.class,
+            httpMethod = "GET",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200,
+                    message = "Busqueda Exitosa",
+                    response = BookDto.class
+            ),
+            @ApiResponse(code = 404,
+                    message = "El autor no existe"
+            ),
+            @ApiResponse(code = 500,
+                    message = "No se pudo conectar a la BD"
+            )
+    })
+    List<BookDto> getBooksByPublisher(HttpServletRequest request,
+                                   @ApiParam(value = "Nombre de la editorial")
+                                   BigInteger publisherId);
+
+
     @ApiOperation(value = "Registrar un nuevo libro")
     @ApiResponses(value = {
             @ApiResponse(code = 200,

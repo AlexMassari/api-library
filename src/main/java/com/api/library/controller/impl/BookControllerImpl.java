@@ -42,6 +42,12 @@ public class BookControllerImpl implements BookController {
     }
 
     @Override
+    @GetMapping("/publisher/{publisherId}")
+    public List<BookDto> getBooksByPublisher(HttpServletRequest request, @PathVariable BigInteger publisherId) {
+        return bookService.getBooksByPublisher(publisherId);
+    }
+
+    @Override
     @PostMapping("/add")
     public ResponseEntity<String> createBook(@RequestBody BookEntity book) {
         try {

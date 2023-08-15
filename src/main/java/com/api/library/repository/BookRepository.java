@@ -27,6 +27,10 @@ public interface BookRepository extends JpaRepository<BookEntity, BigInteger> {
             "from Books where BK_AUTHOR =:authorId", nativeQuery=true)
     List<BookEntity> findByAuthorId(BigInteger authorId);
 
+    @Query(value="select BK_ID, BK_TITLE, BK_AUTHOR, BK_PUBLISHER, BK_YEAR, BK_GENRE, BK_AMOUNT \n" +
+            "from Books where BK_PUBLISHER =:publisherId", nativeQuery=true)
+    List<BookEntity> findByPublisherId(BigInteger publisherId);
+
     @Modifying
     @Query(value = "INSERT INTO Books (BK_TITLE, BK_AUTHOR, BK_PUBLISHER, BK_YEAR, BK_GENRE, BK_AMOUNT) " +
             "VALUES (:title, :authorId, :publisherId, :year, :genre, :amount)", nativeQuery = true)

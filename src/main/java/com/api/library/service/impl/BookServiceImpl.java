@@ -91,6 +91,28 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public List<BookDto> getBooksByPublisher(BigInteger publisherId) {
+        PublisherEntity publisher = publisherRepository.getPublisherIdById(publisherId)
+                .orElseThrow(()->new PublisherIdNotFoundException(publisherId));
+        List<BookEntity> booksByPublisher = bookRepository.findByPublisherId(publisherId);
+        List<BookDto> bookDTOs = new ArrayList<>();
+        for (BookEntity bookEntity : booksByPublisher) {
+            AuthorEntity author = authorRepository.getAuthorById(bookEntity.getBookAuthor())
+                    .orElseThrow(()-> new AuthorIdNotFoundException(bookEntity.getBookAuthor()));
+            BookDto bookDto = new BookDto();
+            bookDto.setID(bookEntity.getBookId());
+            bookDto.setTITLE(bookEntity.getBookTitle());
+            bookDto.setAUTHOR(author.getAuthorName());
+            bookDto.setPUBLISHER(publisher.getPublisherName());
+            bookDto.setYEAR(bookEntity.getBookYear());
+            bookDto.setGENRE(bookEntity.getBookGenre());
+            bookDto.setAMOUNT(bookEntity.getBookAmount());
+            bookDTOs.add(bookDto);
+        }
+        return bookDTOs;
+    }
+
+    @Override
     @Transactional
     public void insertBook(String title, BigInteger author, BigInteger publisher, String year, String genre, int amount) throws NameAlreadyExistException {
         BookEntity book=bookRepository.findBookByTitle(title).orElse(null);
