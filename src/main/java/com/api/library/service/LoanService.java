@@ -1,7 +1,6 @@
 package com.api.library.service;
 
 import com.api.library.dto.LoanDto;
-import com.api.library.entity.LoanEntity;
 import com.api.library.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 

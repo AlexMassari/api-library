@@ -1,7 +1,6 @@
 package com.api.library.service;
 
 import com.api.library.dto.BookDto;
-import com.api.library.entity.BookEntity;
 import com.api.library.exception.NameAlreadyExistException;
 import com.api.library.exception.NotFoundException;
 import org.springframework.stereotype.Service;

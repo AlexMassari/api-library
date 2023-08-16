@@ -1,8 +1,6 @@
 package com.api.library.controller;
 
-import com.api.library.dto.BookDto;
 import com.api.library.entity.AuthorEntity;
-import com.api.library.entity.BookEntity;
 import io.swagger.annotations.*;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

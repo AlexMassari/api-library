@@ -2,7 +2,6 @@ package com.api.library.controller;
 
 import com.api.library.dto.LoanDto;
 import com.api.library.entity.LoanEntity;
-import com.api.library.entity.MemberEntity;
 import io.swagger.annotations.*;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

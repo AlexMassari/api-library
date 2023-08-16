@@ -1,6 +1,5 @@
 package com.api.library.service.impl;
 
-import com.api.library.entity.MemberEntity;
 import com.api.library.entity.PublisherEntity;
 import com.api.library.exception.NameAlreadyExistException;
 import com.api.library.exception.NotFoundException;

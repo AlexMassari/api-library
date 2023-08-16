@@ -1,6 +1,5 @@
 package com.api.library.repository;
 
-import com.api.library.entity.AuthorEntity;
 import com.api.library.entity.PublisherEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

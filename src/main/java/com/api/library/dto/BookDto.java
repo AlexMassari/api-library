@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import java.math.BigInteger;
-import java.util.Date;
+
 
 @Builder
 @Data

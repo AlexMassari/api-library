@@ -1,7 +1,6 @@
 package com.api.library.controller.impl;
 
 import com.api.library.controller.AuthorController;
-import com.api.library.dto.BookDto;
 import com.api.library.entity.AuthorEntity;
 import com.api.library.exception.NameAlreadyExistException;
 import com.api.library.exception.NotFoundException;

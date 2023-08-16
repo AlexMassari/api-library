@@ -5,7 +5,6 @@ import com.api.library.entity.MemberEntity;
 import com.api.library.exception.NotFoundException;
 import com.api.library.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
