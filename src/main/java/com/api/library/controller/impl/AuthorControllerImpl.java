@@ -1,6 +1,7 @@
 package com.api.library.controller.impl;
 
 import com.api.library.controller.AuthorController;
+import com.api.library.dto.BookDto;
 import com.api.library.entity.AuthorEntity;
 import com.api.library.exception.NameAlreadyExistException;
 import com.api.library.exception.NotFoundException;
@@ -10,7 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigInteger;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,6 +21,13 @@ import java.math.BigInteger;
 public class AuthorControllerImpl implements AuthorController {
 
     private final AuthorService authorService;
+
+    @Override
+    @GetMapping("/list")
+    public List<AuthorEntity> getAuthorsList(HttpServletRequest request) {
+        return authorService.getAuthors();
+    }
+
     @Override
     @PostMapping("/add")
     public ResponseEntity<String> createAuthor(@RequestBody AuthorEntity author) {

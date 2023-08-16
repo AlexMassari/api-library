@@ -48,6 +48,12 @@ public class BookControllerImpl implements BookController {
     }
 
     @Override
+    @GetMapping("/list")
+    public List<BookDto> getBooksList(HttpServletRequest request) {
+        return bookService.getBooks();
+    }
+
+    @Override
     @PostMapping("/add")
     public ResponseEntity<String> createBook(@RequestBody BookEntity book) {
         try {

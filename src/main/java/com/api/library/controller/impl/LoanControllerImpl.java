@@ -35,6 +35,12 @@ public class LoanControllerImpl implements LoanController {
     }
 
     @Override
+    @GetMapping("/list")
+    public List <LoanDto> getLoanList(HttpServletRequest request) {
+        return loanService.getLoans();
+    }
+
+    @Override
     @PostMapping("/add")
     public ResponseEntity<String> createLoan(@RequestBody LoanEntity loanEntity) {
         try {

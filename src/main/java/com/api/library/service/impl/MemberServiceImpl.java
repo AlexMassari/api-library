@@ -1,9 +1,11 @@
 package com.api.library.service.impl;
 
+import com.api.library.dto.BookDto;
+import com.api.library.entity.AuthorEntity;
+import com.api.library.entity.BookEntity;
 import com.api.library.entity.MemberEntity;
-import com.api.library.exception.MemberIdNotFoundException;
-import com.api.library.exception.MemberNameNotFoundException;
-import com.api.library.exception.NotFoundException;
+import com.api.library.entity.PublisherEntity;
+import com.api.library.exception.*;
 import com.api.library.repository.MemberRepository;
 import com.api.library.service.MemberService;
 import lombok.AllArgsConstructor;
@@ -12,7 +14,9 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @Service
@@ -31,6 +35,12 @@ public class MemberServiceImpl implements MemberService {
     public MemberEntity findMemberName(String memberName) {
         return memberRepository.findMemberByName(memberName)
                 .orElseThrow(() -> new MemberNameNotFoundException(memberName));
+    }
+
+    @Override
+    public List<MemberEntity> getMembers() {
+        List<MemberEntity> memberEntities = memberRepository.listMembers();
+        return new ArrayList<>(memberEntities);
     }
 
     @Override

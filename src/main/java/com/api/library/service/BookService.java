@@ -19,6 +19,8 @@ public interface BookService {
 
     List<BookDto> getBooksByPublisher(BigInteger publisherId);
 
+    List<BookDto> getBooks();
+
     void insertBook(String title, BigInteger author, BigInteger publisher, String year, String genre, int amount) throws NameAlreadyExistException;
 
     void updateBook(String title, BigInteger author, BigInteger publisher, String year, String genre, int amount, BigInteger id) throws NotFoundException;

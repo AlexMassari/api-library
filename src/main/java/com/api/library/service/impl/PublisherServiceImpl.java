@@ -1,5 +1,6 @@
 package com.api.library.service.impl;
 
+import com.api.library.entity.MemberEntity;
 import com.api.library.entity.PublisherEntity;
 import com.api.library.exception.NameAlreadyExistException;
 import com.api.library.exception.NotFoundException;
@@ -10,12 +11,20 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class PublisherServiceImpl implements PublisherService {
 
     PublisherRepository publisherRepository;
+
+    @Override
+    public List<PublisherEntity> getPublishers() {
+        List<PublisherEntity> publisherEntities = publisherRepository.listPublishers();
+        return new ArrayList<>(publisherEntities);
+    }
 
     @Override
     @Transactional

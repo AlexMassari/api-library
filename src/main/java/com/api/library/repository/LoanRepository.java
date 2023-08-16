@@ -22,6 +22,10 @@ public interface LoanRepository extends JpaRepository<LoanEntity, BigInteger> {
             "from Loans where LO_MEMBERID =:loanMemberId", nativeQuery=true)
     List<LoanEntity> findLoanByMember(@Param("loanMemberId") BigInteger loanMemberId);
 
+    @Query(value="select LO_ID, LO_BOOKID, LO_MEMBERID, LO_LOANDATE, LO_LOANLIMITDATE, LO_RETURNDATE, LO_STATE \n" +
+            "from Loans", nativeQuery=true)
+    List<LoanEntity> listLoans();
+
     @Modifying
     @Query(value = "INSERT INTO Loans (LO_BOOKID, LO_MEMBERID, LO_LOANDATE, LO_LOANLIMITDATE, LO_RETURNDATE, LO_STATE) " +
             "VALUES (:bookId, :memberId, :loanDate, :loanLimit, :loanReturn, :loanState)", nativeQuery = true)

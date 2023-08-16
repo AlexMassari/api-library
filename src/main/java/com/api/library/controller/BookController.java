@@ -89,7 +89,7 @@ public interface BookController {
                     response = BookDto.class
             ),
             @ApiResponse(code = 404,
-                    message = "El autor no existe"
+                    message = "La editorial no existe"
             ),
             @ApiResponse(code = 500,
                     message = "No se pudo conectar a la BD"
@@ -98,6 +98,24 @@ public interface BookController {
     List<BookDto> getBooksByPublisher(HttpServletRequest request,
                                    @ApiParam(value = "Nombre de la editorial")
                                    BigInteger publisherId);
+
+    @ApiOperation(value = "Mostrar todos los libros",
+            response = BookDto.class,
+            httpMethod = "GET",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200,
+                    message = "Busqueda Exitosa",
+                    response = BookDto.class
+            ),
+            @ApiResponse(code = 404,
+                    message = "Error !!!"
+            ),
+            @ApiResponse(code = 500,
+                    message = "No se pudo conectar a la BD"
+            )
+    })
+    List<BookDto> getBooksList(HttpServletRequest request);
 
 
     @ApiOperation(value = "Registrar un nuevo libro")

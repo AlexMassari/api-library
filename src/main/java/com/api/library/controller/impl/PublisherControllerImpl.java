@@ -10,7 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigInteger;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,6 +20,12 @@ import java.math.BigInteger;
 public class PublisherControllerImpl implements PublisherController {
 
     private final PublisherService publisherService;
+
+    @Override
+    @GetMapping("/list")
+    public List<PublisherEntity> getPublisherList(HttpServletRequest request) {
+        return publisherService.getPublishers();
+    }
 
     @Override
     @PostMapping("/add")

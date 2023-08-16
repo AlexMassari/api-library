@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigInteger;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,6 +31,12 @@ public class MemberControllerImpl implements MemberController {
     @GetMapping("/name/{name}")
     public MemberEntity getMemberByName(HttpServletRequest request, @PathVariable(name = "name") final String memberName){
         return memberService.findMemberName(memberName);
+    }
+
+    @Override
+    @GetMapping("/list")
+    public List<MemberEntity> getMemberList(HttpServletRequest request) {
+        return memberService.getMembers();
     }
 
     @Override

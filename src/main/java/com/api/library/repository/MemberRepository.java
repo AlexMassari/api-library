@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -20,6 +21,10 @@ public interface MemberRepository extends JpaRepository<MemberEntity, BigInteger
     @Query(value="select MB_ID, MB_NAME, MB_BIRTH, MB_ADRESS, MB_PHONE, MB_EMAIL, MB_ENTRYDATE \n" +
             "from Members where MB_NAME =:memberName", nativeQuery=true)
     Optional<MemberEntity> findMemberByName(@Param("memberName") String memberName);
+
+    @Query(value="select MB_ID, MB_NAME, MB_BIRTH, MB_ADRESS, MB_PHONE, MB_EMAIL, MB_ENTRYDATE \n" +
+            "from Members", nativeQuery=true)
+    List<MemberEntity> listMembers();
 
     @Modifying
     @Query(value = "INSERT INTO Members (MB_NAME, MB_BIRTH, MB_ADRESS, MB_PHONE, MB_EMAIL, MB_ENTRYDATE) " +

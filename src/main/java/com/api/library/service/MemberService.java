@@ -7,12 +7,15 @@ import org.springframework.stereotype.Service;
 import java.lang.reflect.Member;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public interface MemberService {
     MemberEntity findMemberId(BigInteger memberId);
 
     MemberEntity findMemberName(String memberName);
+
+    List<MemberEntity> getMembers();
 
     void insertMember(String name, Date birth, String adress, String phone, String email, Date entryDate);
 

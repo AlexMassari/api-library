@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -20,6 +21,10 @@ public interface PublisherRepository extends JpaRepository<PublisherEntity, BigI
     @Query(value="select PB_ID, PB_NAME \n" +
             "from Publishers where REPLACE(LOWER(TRIM(PB_NAME)), ' ', '') =  REPLACE(LOWER(TRIM(:publisherName)), ' ', '')", nativeQuery=true)
     Optional<PublisherEntity> getPublisherByName(@Param("publisherName") String publisherName);
+
+    @Query(value="select PB_ID, PB_NAME \n" +
+            "from Publishers", nativeQuery=true)
+    List<PublisherEntity> listPublishers();
 
     @Modifying
     @Query(value = "INSERT INTO Publishers (PB_NAME) " +

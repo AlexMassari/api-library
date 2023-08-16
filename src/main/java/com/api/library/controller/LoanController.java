@@ -37,8 +37,6 @@ public interface LoanController {
                         @ApiParam(value = "Numero ID del prestamo")
                         BigInteger loanId);
 
-
-
     @ApiOperation(value = "Buscar listado del prestamos por socio",
             response = LoanDto.class,
             httpMethod = "GET",
@@ -58,6 +56,25 @@ public interface LoanController {
     List<LoanDto> getLoanByMember(HttpServletRequest request,
                                   @ApiParam(value = "Numero ID del socio")
                                   BigInteger memberId);
+
+    @ApiOperation(value = "Listar prestamos",
+            response = LoanDto.class,
+            httpMethod = "GET",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200,
+                    message = "Busqueda Exitosa",
+                    response = LoanDto.class
+            ),
+            @ApiResponse(code = 404,
+                    message = "Error !!!"
+            ),
+            @ApiResponse(code = 500,
+                    message = "No se pudo conectar a la BD"
+            )
+    })
+    List<LoanDto> getLoanList(HttpServletRequest request);
+
 
     @ApiOperation(value = "Registrar un nuevo prestamo")
     @ApiResponses(value = {

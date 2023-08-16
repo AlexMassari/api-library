@@ -71,6 +71,28 @@ public class LoanServiceImpl  implements LoanService {
     }
 
     @Override
+    public List<LoanDto> getLoans() {
+        List<LoanEntity> loanEntity = loanRepository.listLoans();
+        List<LoanDto> loanList = new ArrayList<>();
+        for(LoanEntity loan : loanEntity){
+            MemberEntity member = memberRepository.findMemberById(loan.getLoanMemberId())
+                    .orElseThrow(()->new MemberIdNotFoundException(loan.getLoanMemberId()));
+            BookEntity book = bookRepository.findBookById(loan.getLoanBookId())
+                    .orElseThrow(()-> new BookIdNotFoundException(loan.getLoanBookId()));
+            LoanDto loanDto = new LoanDto();
+            loanDto.setID(loan.getLoanId());
+            loanDto.setBOOKTITLE(book.getBookTitle());
+            loanDto.setMEMBERNAME(member.getMemberName());
+            loanDto.setDATE(loan.getLoanDate());
+            loanDto.setDATELIMIT(loan.getLoanLimitDate());
+            loanDto.setDATERETURN(loan.getLoanReturnDate());
+            loanDto.setSTATE(loan.getLoanState());
+            loanList.add(loanDto);
+        }
+        return loanList;
+    }
+
+    @Override
     @Transactional
     public void insertLoan(BigInteger bookId, BigInteger memberId, Date loanDate, Date loanLimit, Date loanReturn, String loanState) throws NotFoundException {
         BookEntity book = bookRepository.findBookById(bookId).orElse(null);

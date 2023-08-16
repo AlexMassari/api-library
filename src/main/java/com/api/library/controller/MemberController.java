@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigInteger;
+import java.util.List;
 
 @Controller
 @Api(value = "/member",
@@ -54,6 +55,24 @@ public interface MemberController {
     MemberEntity getMemberByName(HttpServletRequest request,
                                  @ApiParam(value = "Nombre de socio")
                                  String Name);
+
+    @ApiOperation(value = "Listar socios",
+            response = MemberEntity.class,
+            httpMethod = "GET",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200,
+                    message = "Busqueda Exitosa",
+                    response = MemberEntity.class
+            ),
+            @ApiResponse(code = 404,
+                    message = "Error !!!"
+            ),
+            @ApiResponse(code = 500,
+                    message = "No se pudo conectar a la BD"
+            )
+    })
+    List<MemberEntity> getMemberList(HttpServletRequest request);
 
     @ApiOperation(value = "Registrar un nuevo socio")
     @ApiResponses(value = {
